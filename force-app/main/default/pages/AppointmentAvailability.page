@@ -1,9 +1,9 @@
-<apex:page showHeader="false" sidebar="false" standardStylesheets="false" docType="html-5.0">
+<apex:page controller="TestDriveBookingController" showHeader="true" sidebar="true" docType="html-5.0">
     
     <head>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Land Rover Test Drive Booking</title>
+        <title>Land Rover Test Drive Booking - Executive Portal</title>
         
         <style>
             * {
@@ -17,93 +17,138 @@
                 background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
                 color: #ffffff;
                 min-height: 100vh;
+                padding: 20px;
             }
             
-            .header {
-                background: rgba(0, 0, 0, 0.9);
-                padding: 20px 0;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-                border-bottom: 2px solid #d4a855;
-            }
-            
-            .header-content {
-                max-width: 1400px;
-                margin: 0 auto;
-                padding: 0 30px;
+            .main-header {
+                background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 20, 20, 0.95) 100%);
+                padding: 30px 50px;
+                border-radius: 20px;
+                margin-bottom: 40px;
+                box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+                border: 2px solid #d4a855;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .main-header:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, #d4a855 0%, #f4d799 50%, #d4a855 100%);
+            }
+            
+            .logo-section {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .logo-icon {
+                font-size: 48px;
             }
             
             .logo {
-                font-size: 28px;
+                font-size: 32px;
                 font-weight: bold;
                 color: #d4a855;
-                letter-spacing: 2px;
+                letter-spacing: 3px;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
             }
             
             .tagline {
                 color: #999;
                 font-size: 14px;
                 font-style: italic;
+                margin-top: 5px;
+            }
+            
+            .user-info {
+                text-align: right;
+                padding: 15px 25px;
+                background: rgba(212, 168, 85, 0.1);
+                border-radius: 12px;
+                border: 1px solid rgba(212, 168, 85, 0.3);
+            }
+            
+            .user-info strong {
+                color: #d4a855;
+                font-size: 16px;
+            }
+            
+            .user-name {
+                font-size: 18px;
+                color: #fff;
+                margin-top: 5px;
             }
             
             .container {
-                max-width: 1400px;
-                margin: 40px auto;
-                padding: 0 30px;
+                max-width: 1600px;
+                margin: 0 auto;
             }
             
-            .hero {
+            .page-title {
                 text-align: center;
-                padding: 40px 0;
-                margin-bottom: 40px;
+                margin-bottom: 50px;
+                padding: 40px 20px;
+                background: rgba(255, 255, 255, 0.03);
+                border-radius: 20px;
             }
             
-            .hero h1 {
+            .page-title h1 {
                 font-size: 48px;
-                margin-bottom: 15px;
-                background: linear-gradient(135deg, #d4a855 0%, #f4d799 100%);
+                background: linear-gradient(135deg, #d4a855 0%, #f4d799 50%, #d4a855 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
+                margin-bottom: 15px;
+                font-weight: bold;
+                text-shadow: 0 0 30px rgba(212, 168, 85, 0.3);
             }
             
-            .hero p {
-                font-size: 18px;
+            .page-title p {
                 color: #aaa;
-                max-width: 600px;
-                margin: 0 auto;
+                font-size: 18px;
+                letter-spacing: 1px;
             }
             
             .search-section {
                 background: rgba(255, 255, 255, 0.05);
-                backdrop-filter: blur(10px);
-                border-radius: 20px;
-                padding: 40px;
+                backdrop-filter: blur(15px);
+                border-radius: 25px;
+                padding: 45px;
                 margin-bottom: 40px;
-                border: 1px solid rgba(212, 168, 85, 0.2);
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                border: 1px solid rgba(212, 168, 85, 0.3);
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
             }
             
-            .search-title {
-                font-size: 24px;
+            .section-title {
+                font-size: 26px;
                 margin-bottom: 30px;
                 color: #d4a855;
                 display: flex;
                 align-items: center;
+                gap: 12px;
+                font-weight: bold;
+                padding-bottom: 15px;
+                border-bottom: 2px solid rgba(212, 168, 85, 0.3);
             }
             
-            .search-icon {
-                margin-right: 10px;
-                font-size: 28px;
+            .icon {
+                font-size: 32px;
             }
             
             .form-grid {
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 25px;
-                margin-bottom: 30px;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 30px;
+                margin-bottom: 35px;
             }
             
             .form-group {
@@ -112,21 +157,26 @@
             
             .form-group label {
                 display: block;
-                margin-bottom: 10px;
+                margin-bottom: 12px;
                 color: #d4a855;
-                font-size: 14px;
-                font-weight: 600;
+                font-size: 13px;
+                font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 1px;
+                letter-spacing: 1.5px;
+            }
+            
+            .required-star {
+                color: #ff4444;
+                margin-left: 3px;
             }
             
             .form-group select,
             .form-group input {
                 width: 100%;
-                padding: 15px 20px;
-                background: rgba(0, 0, 0, 0.4);
-                border: 2px solid rgba(212, 168, 85, 0.3);
-                border-radius: 10px;
+                padding: 16px 22px;
+                background: rgba(0, 0, 0, 0.5);
+                border: 2px solid rgba(212, 168, 85, 0.4);
+                border-radius: 12px;
                 color: #fff;
                 font-size: 16px;
                 transition: all 0.3s ease;
@@ -136,40 +186,92 @@
             .form-group input:focus {
                 outline: none;
                 border-color: #d4a855;
-                box-shadow: 0 0 20px rgba(212, 168, 85, 0.3);
+                box-shadow: 0 0 25px rgba(212, 168, 85, 0.4);
+                background: rgba(0, 0, 0, 0.7);
             }
             
             .form-group select option {
                 background: #1a1a1a;
                 color: #fff;
+                padding: 10px;
             }
             
-            .btn-search {
-                background: linear-gradient(135deg, #d4a855 0%, #c49845 100%);
-                color: #000;
+            .btn {
                 border: none;
                 padding: 18px 50px;
-                font-size: 18px;
+                font-size: 17px;
                 font-weight: bold;
-                border-radius: 10px;
+                border-radius: 12px;
                 cursor: pointer;
                 transition: all 0.3s ease;
-                box-shadow: 0 4px 15px rgba(212, 168, 85, 0.4);
                 text-transform: uppercase;
                 letter-spacing: 2px;
+                position: relative;
+                overflow: hidden;
             }
             
-            .btn-search:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 25px rgba(212, 168, 85, 0.6);
+            .btn:before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.2);
+                transform: translate(-50%, -50%);
+                transition: width 0.6s, height 0.6s;
             }
             
-            .btn-search:active {
-                transform: translateY(0);
+            .btn:hover:before {
+                width: 300px;
+                height: 300px;
             }
             
-            .results-section {
+            .btn-primary {
+                background: linear-gradient(135deg, #d4a855 0%, #c49845 100%);
+                color: #000;
+                box-shadow: 0 6px 20px rgba(212, 168, 85, 0.5);
+            }
+            
+            .btn-primary:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 30px rgba(212, 168, 85, 0.7);
+            }
+            
+            .btn-success {
+                background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+                color: white;
+                box-shadow: 0 6px 20px rgba(76, 175, 80, 0.5);
+            }
+            
+            .btn-success:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 30px rgba(76, 175, 80, 0.7);
+            }
+            
+            .btn:active {
+                transform: translateY(-1px);
+            }
+            
+            .btn:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+                transform: none;
+            }
+            
+            .loading {
                 display: none;
+                text-align: center;
+                padding: 80px;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 25px;
+                margin: 20px 0;
+                border: 1px solid rgba(212, 168, 85, 0.2);
+            }
+            
+            .loading.show {
+                display: block;
                 animation: fadeIn 0.5s ease;
             }
             
@@ -184,199 +286,14 @@
                 }
             }
             
-            .vehicle-card {
-                background: rgba(255, 255, 255, 0.05);
-                backdrop-filter: blur(10px);
-                border-radius: 20px;
-                padding: 30px;
-                margin-bottom: 30px;
-                border: 1px solid rgba(212, 168, 85, 0.2);
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            }
-            
-            .vehicle-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 25px;
-                padding-bottom: 20px;
-                border-bottom: 2px solid rgba(212, 168, 85, 0.2);
-            }
-            
-            .vehicle-info h3 {
-                font-size: 28px;
-                color: #d4a855;
-                margin-bottom: 5px;
-            }
-            
-            .vehicle-info p {
-                color: #999;
-                font-size: 16px;
-            }
-            
-            .branch-badge {
-                background: rgba(212, 168, 85, 0.2);
-                padding: 10px 20px;
-                border-radius: 25px;
-                border: 1px solid #d4a855;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
-            
-            .location-icon {
-                font-size: 18px;
-            }
-            
-            .slots-title {
-                font-size: 20px;
-                margin-bottom: 20px;
-                color: #d4a855;
-            }
-            
-            .slots-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 15px;
-                margin-bottom: 20px;
-            }
-            
-            .slot-item {
-                background: rgba(0, 0, 0, 0.4);
-                border: 2px solid rgba(212, 168, 85, 0.3);
-                border-radius: 10px;
-                padding: 15px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                text-align: center;
-            }
-            
-            .slot-item:hover {
-                background: rgba(212, 168, 85, 0.1);
-                border-color: #d4a855;
-                transform: translateY(-2px);
-            }
-            
-            .slot-item.selected {
-                background: rgba(212, 168, 85, 0.3);
-                border-color: #d4a855;
-                box-shadow: 0 0 20px rgba(212, 168, 85, 0.4);
-            }
-            
-            .slot-item.unavailable {
-                opacity: 0.4;
-                cursor: not-allowed;
-                border-color: #666;
-            }
-            
-            .slot-item.unavailable:hover {
-                background: rgba(0, 0, 0, 0.4);
-                border-color: #666;
-                transform: none;
-            }
-            
-            .slot-time {
-                font-size: 18px;
-                font-weight: bold;
-                margin-bottom: 5px;
-            }
-            
-            .slot-status {
-                font-size: 12px;
-                color: #4caf50;
-            }
-            
-            .slot-status.unavailable {
-                color: #f44336;
-            }
-            
-            .booking-section {
-                background: rgba(212, 168, 85, 0.1);
-                border-radius: 15px;
-                padding: 25px;
-                margin-top: 20px;
-                border: 2px solid #d4a855;
-                display: none;
-            }
-            
-            .booking-form {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 20px;
-                margin-bottom: 20px;
-            }
-            
-            .btn-book {
-                background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
-                color: white;
-                border: none;
-                padding: 15px 40px;
-                font-size: 16px;
-                font-weight: bold;
-                border-radius: 10px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
-            
-            .btn-book:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 25px rgba(76, 175, 80, 0.6);
-            }
-            
-            .btn-book:disabled {
-                opacity: 0.5;
-                cursor: not-allowed;
-                transform: none;
-            }
-            
-            .success-message {
-                display: none;
-                background: rgba(76, 175, 80, 0.2);
-                border: 2px solid #4caf50;
-                border-radius: 15px;
-                padding: 30px;
-                text-align: center;
-                margin-top: 30px;
-                animation: fadeIn 0.5s ease;
-            }
-            
-            .success-message.show {
-                display: block;
-            }
-            
-            .success-message h3 {
-                font-size: 28px;
-                color: #4caf50;
-                margin-bottom: 15px;
-            }
-            
-            .success-message p {
-                color: #aaa;
-                font-size: 16px;
-                line-height: 1.6;
-            }
-            
-            .loading {
-                display: none;
-                text-align: center;
-                padding: 40px;
-            }
-            
-            .loading.show {
-                display: block;
-            }
-            
             .spinner {
-                border: 4px solid rgba(212, 168, 85, 0.2);
-                border-top: 4px solid #d4a855;
+                border: 5px solid rgba(212, 168, 85, 0.2);
+                border-top: 5px solid #d4a855;
                 border-radius: 50%;
-                width: 60px;
-                height: 60px;
+                width: 70px;
+                height: 70px;
                 animation: spin 1s linear infinite;
-                margin: 0 auto 20px;
+                margin: 0 auto 25px;
             }
             
             @keyframes spin {
@@ -384,142 +301,622 @@
                 100% { transform: rotate(360deg); }
             }
             
+            .loading p {
+                font-size: 18px;
+                color: #d4a855;
+                letter-spacing: 1px;
+            }
+            
+            .results-section {
+                display: none;
+            }
+            
+            .results-section.show {
+                display: block;
+                animation: fadeIn 0.5s ease;
+            }
+            
+            .results-header {
+                background: rgba(212, 168, 85, 0.1);
+                padding: 20px 30px;
+                border-radius: 15px;
+                margin-bottom: 30px;
+                border-left: 5px solid #d4a855;
+            }
+            
+            .results-count {
+                font-size: 20px;
+                color: #d4a855;
+                font-weight: bold;
+            }
+            
+            .vehicle-card {
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(15px);
+                border-radius: 25px;
+                padding: 40px;
+                margin-bottom: 35px;
+                border: 1px solid rgba(212, 168, 85, 0.3);
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+                transition: all 0.3s ease;
+            }
+            
+            .vehicle-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+                border-color: #d4a855;
+            }
+            
+            .vehicle-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 30px;
+                padding-bottom: 25px;
+                border-bottom: 2px solid rgba(212, 168, 85, 0.3);
+            }
+            
+            .vehicle-info h3 {
+                font-size: 32px;
+                color: #d4a855;
+                margin-bottom: 12px;
+                font-weight: bold;
+            }
+            
+            .vehicle-subtitle {
+                color: #999;
+                font-size: 16px;
+                margin-bottom: 8px;
+            }
+            
+            .vehicle-vin {
+                color: #666;
+                font-size: 13px;
+                font-family: monospace;
+                letter-spacing: 1px;
+            }
+            
+            .vehicle-specs {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 18px;
+                margin-bottom: 30px;
+            }
+            
+            .spec-item {
+                background: rgba(0, 0, 0, 0.4);
+                padding: 15px 22px;
+                border-radius: 12px;
+                border-left: 4px solid #d4a855;
+                transition: all 0.3s ease;
+            }
+            
+            .spec-item:hover {
+                background: rgba(212, 168, 85, 0.1);
+                transform: translateX(5px);
+            }
+            
+            .spec-label {
+                font-size: 11px;
+                color: #999;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                margin-bottom: 6px;
+                font-weight: 600;
+            }
+            
+            .spec-value {
+                font-size: 16px;
+                color: #fff;
+                font-weight: 700;
+            }
+            
+            .branch-badge {
+                background: rgba(212, 168, 85, 0.2);
+                padding: 15px 30px;
+                border-radius: 30px;
+                border: 2px solid #d4a855;
+                font-size: 15px;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                white-space: nowrap;
+            }
+            
+            .slots-section {
+                margin-top: 35px;
+                padding: 30px;
+                background: rgba(0, 0, 0, 0.3);
+                border-radius: 20px;
+            }
+            
+            .slots-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 18px;
+                margin-bottom: 25px;
+            }
+            
+            .slot-item {
+                background: rgba(0, 0, 0, 0.5);
+                border: 2px solid rgba(212, 168, 85, 0.4);
+                border-radius: 15px;
+                padding: 22px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .slot-item:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(212, 168, 85, 0.2), transparent);
+                transition: left 0.5s;
+            }
+            
+            .slot-item:hover:before {
+                left: 100%;
+            }
+            
+            .slot-item:hover {
+                background: rgba(212, 168, 85, 0.15);
+                border-color: #d4a855;
+                transform: translateY(-4px);
+                box-shadow: 0 8px 20px rgba(212, 168, 85, 0.4);
+            }
+            
+            .slot-item.selected {
+                background: rgba(212, 168, 85, 0.35);
+                border-color: #d4a855;
+                box-shadow: 0 0 30px rgba(212, 168, 85, 0.6);
+                border-width: 3px;
+            }
+            
+            .slot-item.unavailable {
+                opacity: 0.4;
+                cursor: not-allowed;
+                border-color: #666;
+                background: rgba(0, 0, 0, 0.6);
+            }
+            
+            .slot-item.unavailable:hover {
+                background: rgba(0, 0, 0, 0.6);
+                border-color: #666;
+                transform: none;
+                box-shadow: none;
+            }
+            
+            .slot-item.unavailable:before {
+                display: none;
+            }
+            
+            .slot-time {
+                font-size: 19px;
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: #fff;
+            }
+            
+            .slot-status {
+                font-size: 14px;
+                color: #4caf50;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            
+            .slot-status.unavailable {
+                color: #f44336;
+            }
+            
+            .booking-section {
+                background: linear-gradient(135deg, rgba(212, 168, 85, 0.1) 0%, rgba(212, 168, 85, 0.05) 100%);
+                border-radius: 20px;
+                padding: 35px;
+                margin-top: 30px;
+                border: 2px solid #d4a855;
+                display: none;
+            }
+            
+            .booking-section.show {
+                display: block;
+                animation: fadeIn 0.5s ease;
+            }
+            
+            .lead-search-box {
+                position: relative;
+                margin-bottom: 30px;
+            }
+            
+            .lead-search-input {
+                width: 100%;
+                padding: 20px 60px 20px 25px;
+                background: rgba(0, 0, 0, 0.6);
+                border: 2px solid rgba(212, 168, 85, 0.5);
+                border-radius: 15px;
+                color: #fff;
+                font-size: 17px;
+                transition: all 0.3s ease;
+            }
+            
+            .lead-search-input:focus {
+                outline: none;
+                border-color: #d4a855;
+                box-shadow: 0 0 25px rgba(212, 168, 85, 0.4);
+                background: rgba(0, 0, 0, 0.8);
+            }
+            
+            .search-icon-box {
+                position: absolute;
+                right: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #d4a855;
+                font-size: 24px;
+                pointer-events: none;
+            }
+            
+            .lead-results {
+                max-height: 450px;
+                overflow-y: auto;
+                margin-top: 20px;
+                display: none;
+                padding: 10px;
+            }
+            
+            .lead-results::-webkit-scrollbar {
+                width: 8px;
+            }
+            
+            .lead-results::-webkit-scrollbar-track {
+                background: rgba(0, 0, 0, 0.3);
+                border-radius: 10px;
+            }
+            
+            .lead-results::-webkit-scrollbar-thumb {
+                background: #d4a855;
+                border-radius: 10px;
+            }
+            
+            .lead-results.show {
+                display: block;
+            }
+            
+            .lead-item {
+                background: rgba(0, 0, 0, 0.6);
+                padding: 22px;
+                margin-bottom: 12px;
+                border-radius: 12px;
+                border: 2px solid transparent;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            .lead-item:hover {
+                border-color: #d4a855;
+                background: rgba(212, 168, 85, 0.15);
+                transform: translateX(5px);
+            }
+            
+            .lead-item.selected {
+                border-color: #d4a855;
+                background: rgba(212, 168, 85, 0.25);
+                box-shadow: 0 0 20px rgba(212, 168, 85, 0.3);
+            }
+            
+            .lead-name {
+                font-size: 19px;
+                font-weight: bold;
+                color: #d4a855;
+                margin-bottom: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .lead-status-badge {
+                font-size: 12px;
+                padding: 4px 12px;
+                background: rgba(76, 175, 80, 0.2);
+                border: 1px solid #4caf50;
+                border-radius: 12px;
+                color: #4caf50;
+            }
+            
+            .lead-details {
+                font-size: 14px;
+                color: #aaa;
+                line-height: 1.8;
+            }
+            
+            .lead-detail-row {
+                margin-bottom: 4px;
+            }
+            
+            .selected-lead-info {
+                background: rgba(76, 175, 80, 0.15);
+                border: 2px solid #4caf50;
+                border-radius: 15px;
+                padding: 25px;
+                margin-bottom: 25px;
+                display: none;
+            }
+            
+            .selected-lead-info.show {
+                display: block;
+                animation: fadeIn 0.5s ease;
+            }
+            
+            .selected-lead-header {
+                font-size: 18px;
+                color: #4caf50;
+                font-weight: bold;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .selected-lead-name {
+                font-size: 22px;
+                color: #fff;
+                font-weight: bold;
+                margin-bottom: 8px;
+            }
+            
+            .selected-lead-details {
+                color: #aaa;
+                font-size: 15px;
+                line-height: 1.6;
+            }
+            
+            .alert {
+                padding: 25px 30px;
+                border-radius: 15px;
+                margin-bottom: 25px;
+                display: none;
+                animation: fadeIn 0.5s ease;
+                font-size: 16px;
+                line-height: 1.8;
+            }
+            
+            .alert.show {
+                display: block;
+            }
+            
+            .alert-success {
+                background: rgba(76, 175, 80, 0.2);
+                border: 2px solid #4caf50;
+                color: #4caf50;
+            }
+            
+            .alert-error {
+                background: rgba(244, 67, 54, 0.2);
+                border: 2px solid #f44336;
+                color: #f44336;
+            }
+            
+            .alert-warning {
+                background: rgba(255, 193, 7, 0.2);
+                border: 2px solid #ffc107;
+                color: #ffc107;
+            }
+            
+            .alert-icon {
+                font-size: 24px;
+                margin-right: 10px;
+                vertical-align: middle;
+            }
+            
             .no-results {
                 text-align: center;
-                padding: 60px;
+                padding: 80px;
                 color: #999;
+                background: rgba(255, 255, 255, 0.03);
+                border-radius: 20px;
+                border: 2px dashed rgba(212, 168, 85, 0.3);
             }
             
             .no-results-icon {
-                font-size: 64px;
-                margin-bottom: 20px;
+                font-size: 80px;
+                margin-bottom: 25px;
+                opacity: 0.5;
+            }
+            
+            .no-results h3 {
+                font-size: 24px;
+                margin-bottom: 15px;
+                color: #999;
+            }
+            
+            .no-results p {
+                font-size: 16px;
+                color: #666;
             }
             
             .full-width {
                 grid-column: 1 / -1;
             }
             
+            @media (max-width: 1024px) {
+                .main-header {
+                    flex-direction: column;
+                    gap: 20px;
+                    text-align: center;
+                }
+                
+                .vehicle-header {
+                    flex-direction: column;
+                    gap: 20px;
+                }
+                
+                .page-title h1 {
+                    font-size: 36px;
+                }
+            }
+            
             @media (max-width: 768px) {
-                .hero h1 {
-                    font-size: 32px;
+                body {
+                    padding: 10px;
+                }
+                
+                .main-header {
+                    padding: 20px;
+                }
+                
+                .logo {
+                    font-size: 24px;
+                }
+                
+                .page-title h1 {
+                    font-size: 28px;
+                }
+                
+                .search-section {
+                    padding: 25px;
                 }
                 
                 .form-grid {
                     grid-template-columns: 1fr;
                 }
                 
-                .vehicle-header {
-                    flex-direction: column;
-                    align-items: flex-start;
-                    gap: 15px;
+                .vehicle-card {
+                    padding: 25px;
+                }
+                
+                .vehicle-specs {
+                    grid-template-columns: 1fr;
                 }
                 
                 .slots-grid {
-                    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                    grid-template-columns: 1fr;
                 }
             }
         </style>
     </head>
     
     <body>
-        <!-- Header -->
-        <div class="header">
-            <div class="header-content">
-                <div>
-                    <div class="logo">LAND ROVER</div>
-                    <div class="tagline">Above and Beyond</div>
+        <div class="container">
+            <!-- Header -->
+            <div class="main-header">
+                <div class="logo-section">
+                    <div class="logo-icon">&#128663;</div>
+                    <div>
+                        <div class="logo">LAND ROVER</div>
+                        <div class="tagline">Test Drive Executive Portal</div>
+                    </div>
                 </div>
-                <div style="text-align: right;">
-                    <div style="color: #d4a855; font-weight: bold;">VST Grandeur</div>
-                    <div class="tagline">Premium Experience</div>
+                <div class="user-info">
+                    <div><strong>&#128100; Logged in as:</strong></div>
+                    <div class="user-name">{!$User.FirstName} {!$User.LastName}</div>
+                    
                 </div>
             </div>
-        </div>
-        
-        <!-- Main Container -->
-        <div class="container">
-            <!-- Hero Section -->
-            <div class="hero">
-                <h1>Book Your Test Drive Experience</h1>
-                <p>Discover the extraordinary. Schedule your exclusive test drive with our premium collection of Land Rover vehicles.</p>
+            
+            <!-- Page Title -->
+            <div class="page-title">
+                <h1>&#127919; Schedule Test Drive Appointment</h1>
+                <p>Search for available vehicles and create appointments for your premium customers</p>
             </div>
             
             <!-- Search Section -->
             <div class="search-section">
-                <div class="search-title">
-                    <span class="search-icon">&#128269;</span>
-                    Find Your Perfect Drive
+                <div class="section-title">
+                    <span class="icon">&#128269;</span>
+                    Search Available Vehicles
                 </div>
                 
-                <form id="searchForm" onsubmit="return false;">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="model">Select Model</label>
-                            <select id="model" required="required">
-                                <option value="">Choose a Model</option>
-                                <option value="Range Rover">Range Rover</option>
-                                <option value="Range Rover Sport">Range Rover Sport</option>
-                                <option value="Range Rover Velar">Range Rover Velar</option>
-                                <option value="Range Rover Evoque">Range Rover Evoque</option>
-                                <option value="Defender">Defender</option>
-                                <option value="Discovery">Discovery</option>
-                                <option value="Discovery Sport">Discovery Sport</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="variant">Select Variant</label>
-                            <select id="variant" required="required">
-                                <option value="">Choose a Variant</option>
-                                <option value="SE">SE</option>
-                                <option value="HSE">HSE</option>
-                                <option value="Autobiography">Autobiography</option>
-                                <option value="SVAutobiography">SV Autobiography</option>
-                                <option value="P400">P400</option>
-                                <option value="P525">P525</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="branch">Preferred Branch</label>
-                            <select id="branch">
-                                <option value="">All Branches</option>
-                                <option value="Hyderabad - Jubilee Hills">Hyderabad - Jubilee Hills</option>
-                                <option value="Hyderabad - Somajiguda">Hyderabad - Somajiguda</option>
-                                <option value="Bangalore - Whitefield">Bangalore - Whitefield</option>
-                                <option value="Bangalore - Indiranagar">Bangalore - Indiranagar</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="testDate">Select Date</label>
-                            <input type="date" id="testDate" required="required"/>
-                        </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="model">
+                            Vehicle Model
+                            <span class="required-star">*</span>
+                        </label>
+                        <select id="model" required="required">
+                            <option value="">-- Select Model --</option>
+                            <option value="Range Rover">Range Rover</option>
+                            <option value="Range Rover Sport">Range Rover Sport</option>
+                            <option value="Range Rover Velar">Range Rover Velar</option>
+                            <option value="Range Rover Evoque">Range Rover Evoque</option>
+                            <option value="Defender">Defender</option>
+                            <option value="Defender 90">Defender 90</option>
+                            <option value="Defender 110">Defender 110</option>
+                            <option value="Discovery">Discovery</option>
+                            <option value="Discovery Sport">Discovery Sport</option>
+                        </select>
                     </div>
                     
-                    <div style="text-align: center;">
-                        <button type="button" class="btn-search" onclick="searchSlots()">Search Available Slots</button>
+                    <div class="form-group">
+                        <label for="variant">
+                            Variant
+                            <span class="required-star">*</span>
+                        </label>
+                        <select id="variant" required="required">
+                            <option value="">-- Select Variant --</option>
+                            <option value="SE">SE</option>
+                            <option value="HSE">HSE</option>
+                            <option value="HSE Dynamic">HSE Dynamic</option>
+                            <option value="Autobiography">Autobiography</option>
+                            <option value="SV Autobiography">SV Autobiography</option>
+                            <option value="First Edition">First Edition</option>
+                            <option value="P300">P300</option>
+                            <option value="P400">P400</option>
+                            <option value="P525">P525</option>
+                            <option value="D300">D300</option>
+                        </select>
                     </div>
-                </form>
+                    
+                    <div class="form-group">
+                        <label for="branch">
+                            &#128205; Branch Location
+                        </label>
+                        <select id="branch">
+                            <option value="">-- All Branches --</option>
+                            <option value="Hyderabad - Jubilee Hills">Hyderabad - Jubilee Hills</option>
+                            <option value="Hyderabad - Somajiguda">Hyderabad - Somajiguda</option>
+                            <option value="Hyderabad - Banjara Hills">Hyderabad - Banjara Hills</option>
+                            <option value="Bangalore - Whitefield">Bangalore - Whitefield</option>
+                            <option value="Bangalore - Indiranagar">Bangalore - Indiranagar</option>
+                            <option value="Chennai - Nungambakkam">Chennai - Nungambakkam</option>
+                            <option value="Mumbai - Worli">Mumbai - Worli</option>
+                            <option value="Delhi - Connaught Place">Delhi - Connaught Place</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="testDate">
+                            &#128197; Appointment Date
+                            <span class="required-star">*</span>
+                        </label>
+                        <input type="date" id="testDate" required="required"/>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button type="button" class="btn btn-primary" onclick="searchVehicles()">
+                        &#128269; Search Available Vehicles
+                    </button>
+                </div>
             </div>
+            
+            <!-- Alert Messages -->
+            <div id="alertBox" class="alert"></div>
             
             <!-- Loading -->
             <div id="loading" class="loading">
                 <div class="spinner"></div>
-                <p>Searching for available slots...</p>
+                <p>&#9203; Searching for available vehicles...</p>
             </div>
             
             <!-- Results Section -->
-            <div id="resultsSection" class="results-section">
-                <!-- Vehicle cards will be dynamically inserted here -->
-            </div>
-            
-            <!-- Success Message -->
-            <div id="successMessage" class="success-message">
-                <h3>&#10004; Appointment Confirmed!</h3>
-                <p>Your test drive has been successfully scheduled. We have sent a confirmation to your email with all the details.</p>
-                <p style="margin-top: 15px;">Our team will contact you shortly to confirm your booking.</p>
-            </div>
+            <div id="resultsSection" class="results-section"></div>
         </div>
         
         <script type="text/javascript">
@@ -527,153 +924,194 @@
             var today = new Date().toISOString().split('T')[0];
             document.getElementById('testDate').setAttribute('min', today);
             
-            // Sample vehicle data
-            var vehicleData = [
-                {
-                    id: 1,
-                    model: 'Range Rover',
-                    variant: 'Autobiography',
-                    branch: 'Hyderabad - Jubilee Hills',
-                    color: 'Santorini Black',
-                    registrationNo: 'TS07AB1234',
-                    slots: [
-                        { time: '09:00 AM - 10:30 AM', available: true },
-                        { time: '11:00 AM - 12:30 PM', available: true },
-                        { time: '01:00 PM - 02:30 PM', available: false },
-                        { time: '03:00 PM - 04:30 PM', available: true },
-                        { time: '05:00 PM - 06:30 PM', available: true }
-                    ]
-                },
-                {
-                    id: 2,
-                    model: 'Range Rover',
-                    variant: 'Autobiography',
-                    branch: 'Bangalore - Whitefield',
-                    color: 'Byron Blue',
-                    registrationNo: 'KA01MN5678',
-                    slots: [
-                        { time: '09:00 AM - 10:30 AM', available: false },
-                        { time: '11:00 AM - 12:30 PM', available: true },
-                        { time: '01:00 PM - 02:30 PM', available: true },
-                        { time: '03:00 PM - 04:30 PM', available: true },
-                        { time: '05:00 PM - 06:30 PM', available: false }
-                    ]
-                },
-                {
-                    id: 3,
-                    model: 'Defender',
-                    variant: 'SE',
-                    branch: 'Hyderabad - Somajiguda',
-                    color: 'Fuji White',
-                    registrationNo: 'TS09CD9012',
-                    slots: [
-                        { time: '09:00 AM - 10:30 AM', available: true },
-                        { time: '11:00 AM - 12:30 PM', available: true },
-                        { time: '01:00 PM - 02:30 PM', available: true },
-                        { time: '03:00 PM - 04:30 PM', available: false },
-                        { time: '05:00 PM - 06:30 PM', available: true }
-                    ]
-                }
-            ];
-            
+            // Global variables
             var selectedSlot = null;
-            var selectedVehicle = null;
+            var selectedVehicleId = null;
+            var selectedLeadId = null;
+            var searchTimeout = null;
+            var currentSearchDate = null;
             
-            function searchSlots() {
+            // Search Vehicles
+            function searchVehicles() {
                 var model = document.getElementById('model').value;
                 var variant = document.getElementById('variant').value;
                 var branch = document.getElementById('branch').value;
                 var testDate = document.getElementById('testDate').value;
                 
                 if (!model || !variant || !testDate) {
-                    alert('Please fill in all required fields');
-                    return false;
-                }
-                
-                document.getElementById('loading').className = 'loading show';
-                document.getElementById('resultsSection').style.display = 'none';
-                document.getElementById('successMessage').className = 'success-message';
-                
-                setTimeout(function() {
-                    document.getElementById('loading').className = 'loading';
-                    displayResults(model, variant, branch);
-                }, 1500);
-            }
-            
-            function displayResults(model, variant, branch) {
-                var resultsSection = document.getElementById('resultsSection');
-                resultsSection.innerHTML = '';
-                
-                var filteredVehicles = [];
-                for (var i = 0; i < vehicleData.length; i++) {
-                    var v = vehicleData[i];
-                    var matches = (v.model === model && v.variant === variant);
-                    if (branch && branch !== '') {
-                        matches = matches && (v.branch === branch);
-                    }
-                    if (matches) {
-                        filteredVehicles.push(v);
-                    }
-                }
-                
-                if (filteredVehicles.length === 0) {
-                    resultsSection.innerHTML = '<div class="no-results"><div class="no-results-icon">&#128663;</div><h3 style="color: #999; margin-bottom: 10px;">No Vehicles Available</h3><p>We could not find any vehicles matching your criteria. Please try different options.</p></div>';
-                    resultsSection.style.display = 'block';
+                    showAlert('<span class="alert-icon">&#9888;</span> Please fill in all required fields (Model, Variant, and Date)', 'warning');
                     return;
                 }
                 
-                for (var i = 0; i < filteredVehicles.length; i++) {
-                    var vehicle = filteredVehicles[i];
-                    var vehicleCard = createVehicleCard(vehicle);
-                    resultsSection.appendChild(vehicleCard);
-                }
+                currentSearchDate = testDate;
+                hideAlert();
+                document.getElementById('loading').className = 'loading show';
+                document.getElementById('resultsSection').className = 'results-section';
+                document.getElementById('resultsSection').innerHTML = '';
                 
-                resultsSection.style.display = 'block';
+                // Reset selections
+                selectedSlot = null;
+                selectedVehicleId = null;
+                selectedLeadId = null;
+                
+                // Call Apex Remote Action
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.TestDriveBookingController.getVehicleAvailability}',
+                    model, variant, branch, testDate,
+                    function(result, event) {
+                        document.getElementById('loading').className = 'loading';
+                        
+                        if (event.status) {
+                            if (result && result.length > 0) {
+                                displayVehicles(result);
+                            } else {
+                                showNoResults();
+                            }
+                        } else {
+                            showAlert('<span class="alert-icon">&#10060;</span> Error loading vehicles: ' + event.message, 'error');
+                        }
+                    },
+                    {escape: false, timeout: 30000}
+                );
             }
             
+            // Display Vehicles
+            function displayVehicles(vehicles) {
+                var resultsSection = document.getElementById('resultsSection');
+                resultsSection.innerHTML = '';
+                
+                // Add results header
+                var header = document.createElement('div');
+                header.className = 'results-header';
+                header.innerHTML = '<div class="results-count">&#127919; Found ' + vehicles.length + ' available vehicle(s)</div>';
+                resultsSection.appendChild(header);
+                
+                for (var i = 0; i < vehicles.length; i++) {
+                    var vehicle = vehicles[i];
+                    var card = createVehicleCard(vehicle);
+                    resultsSection.appendChild(card);
+                }
+                
+                resultsSection.className = 'results-section show';
+            }
+            
+            // Create Vehicle Card
             function createVehicleCard(vehicle) {
                 var card = document.createElement('div');
                 card.className = 'vehicle-card';
-                card.id = 'vehicle-' + vehicle.id;
+                card.id = 'vehicle-' + vehicle.vehicleId;
                 
+                // Create slots HTML
                 var slotsHTML = '';
-                for (var i = 0; i < vehicle.slots.length; i++) {
-                    var slot = vehicle.slots[i];
-                    var unavailableClass = slot.available ? '' : 'unavailable';
-                    var statusText = slot.available ? '&#10004; Available' : '&#10007; Booked';
-                    var statusClass = slot.available ? '' : 'unavailable';
-                    
-                    slotsHTML += '<div class="slot-item ' + unavailableClass + '" data-vehicle-id="' + vehicle.id + '" data-slot-index="' + i + '" onclick="selectSlot(' + vehicle.id + ', ' + i + ', ' + slot.available + ')"><div class="slot-time">' + slot.time + '</div><div class="slot-status ' + statusClass + '">' + statusText + '</div></div>';
+                if (vehicle.slots && vehicle.slots.length > 0) {
+                    for (var i = 0; i < vehicle.slots.length; i++) {
+                        var slot = vehicle.slots[i];
+                        var unavailableClass = slot.available ? '' : ' unavailable';
+                        var statusText = slot.available ? '&#10004; Available' : '&#10007; Booked';
+                        var statusClass = slot.available ? '' : ' unavailable';
+                        
+                        slotsHTML += '<div class="slot-item' + unavailableClass + '" onclick="selectSlot(\'' + 
+                            vehicle.vehicleId + '\', \'' + escapeHtml(slot.timeVal) + '\', ' + slot.available + ')">' +
+                            '<div class="slot-time">&#128337; ' + escapeHtml(slot.timeVal) + '</div>' +
+                            '<div class="slot-status' + statusClass + '">' + statusText + '</div>' +
+                            '</div>';
+                    }
+                } else {
+                    slotsHTML = '<div style="text-align: center; color: #999; padding: 20px;">No time slots available</div>';
                 }
                 
-                card.innerHTML = '<div class="vehicle-header"><div class="vehicle-info"><h3>' + vehicle.model + ' ' + vehicle.variant + '</h3><p>' + vehicle.color + ' &bull; ' + vehicle.registrationNo + '</p></div><div class="branch-badge"><span class="location-icon">&#128205;</span><span>' + vehicle.branch + '</span></div></div><div class="slots-title">Available Time Slots</div><div class="slots-grid">' + slotsHTML + '</div><div class="booking-section" id="booking-' + vehicle.id + '"><h4 style="color: #d4a855; margin-bottom: 20px;">Complete Your Booking</h4><div class="booking-form"><div class="form-group"><label>Full Name *</label><input type="text" id="name-' + vehicle.id + '" required="required" placeholder="Enter your full name"/></div><div class="form-group"><label>Email *</label><input type="email" id="email-' + vehicle.id + '" required="required" placeholder="your.email@example.com"/></div><div class="form-group"><label>Phone Number *</label><input type="tel" id="phone-' + vehicle.id + '" required="required" placeholder="+91 XXXXX XXXXX"/></div><div class="form-group"><label>Special Requirements</label><input type="text" id="requirements-' + vehicle.id + '" placeholder="Optional"/></div><div class="full-width"><button type="button" class="btn-book" onclick="submitBooking(' + vehicle.id + ')">Confirm Appointment</button></div></div></div>';
+                card.innerHTML = 
+                    '<div class="vehicle-header">' +
+                        '<div class="vehicle-info">' +
+                            '<h3>&#128663; ' + escapeHtml(vehicle.model) + ' ' + escapeHtml(vehicle.variant) + '</h3>' +
+                            '<div class="vehicle-subtitle">' + escapeHtml(vehicle.color) + ' &bull; ' + escapeHtml(vehicle.registrationNo) + '</div>' +
+                            '<div class="vehicle-vin">VIN: ' + escapeHtml(vehicle.vin) + '</div>' +
+                        '</div>' +
+                        '<div class="branch-badge">&#128205; ' + escapeHtml(vehicle.branch) + '</div>' +
+                    '</div>' +
+                    '<div class="vehicle-specs">' +
+                        '<div class="spec-item">' +
+                            '<div class="spec-label">Year</div>' +
+                            '<div class="spec-value">' + escapeHtml(vehicle.year) + '</div>' +
+                        '</div>' +
+                        '<div class="spec-item">' +
+                            '<div class="spec-label">Fuel Type</div>' +
+                            '<div class="spec-value">' + escapeHtml(vehicle.fuelType) + '</div>' +
+                        '</div>' +
+                        '<div class="spec-item">' +
+                            '<div class="spec-label">Transmission</div>' +
+                            '<div class="spec-value">' + escapeHtml(vehicle.transmission) + '</div>' +
+                        '</div>' +
+                        '<div class="spec-item">' +
+                            '<div class="spec-label">Engine</div>' +
+                            '<div class="spec-value">' + escapeHtml(vehicle.engine) + '</div>' +
+                        '</div>' +
+                        '<div class="spec-item">' +
+                            '<div class="spec-label">Seating</div>' +
+                            '<div class="spec-value">' + escapeHtml(vehicle.seating) + ' Seats</div>' +
+                        '</div>' +
+                        '<div class="spec-item">' +
+                            '<div class="spec-label">Mileage</div>' +
+                            '<div class="spec-value">' + escapeHtml(vehicle.mileage) + ' km</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="slots-section">' +
+                        '<div class="section-title" style="font-size: 22px;">&#128197; Available Time Slots</div>' +
+                        '<div class="slots-grid">' + slotsHTML + '</div>' +
+                    '</div>' +
+                    '<div class="booking-section" id="booking-' + vehicle.vehicleId + '">' +
+                        '<div class="section-title" style="font-size: 22px;">&#128100; Select Lead for Appointment</div>' +
+                        '<div class="lead-search-box">' +
+                            '<input type="text" class="lead-search-input" id="leadSearch-' + vehicle.vehicleId + 
+                            '" placeholder="&#128269; Search by Lead Name, Email, Phone, or Company..." ' +
+                            'oninput="searchLeads(\'' + vehicle.vehicleId + '\')">' +
+                            '<span class="search-icon-box">&#128269;</span>' +
+                        '</div>' +
+                        '<div class="lead-results" id="leadResults-' + vehicle.vehicleId + '"></div>' +
+                        '<div class="selected-lead-info" id="selectedLead-' + vehicle.vehicleId + '"></div>' +
+                        '<div style="text-align: center; margin-top: 25px;">' +
+                            '<button type="button" class="btn btn-success" id="bookBtn-' + vehicle.vehicleId + 
+                            '" onclick="createAppointment(\'' + vehicle.vehicleId + '\')" disabled="disabled">' +
+                            '&#10004; Confirm Appointment</button>' +
+                        '</div>' +
+                    '</div>';
                 
                 return card;
             }
             
-            function selectSlot(vehicleId, slotIndex, isAvailable) {
+            // Select Slot
+            function selectSlot(vehicleId, slotTime, isAvailable) {
                 if (!isAvailable) return;
                 
-                var allSlots = document.querySelectorAll('.slot-item.selected');
+                // Remove all previous selections
+                var allSlots = document.querySelectorAll('.slot-item');
                 for (var i = 0; i < allSlots.length; i++) {
                     allSlots[i].className = allSlots[i].className.replace(' selected', '');
                 }
                 
-                var allBookings = document.querySelectorAll('[id^="booking-"]');
+                // Hide all booking sections
+                var allBookings = document.querySelectorAll('.booking-section');
                 for (var i = 0; i < allBookings.length; i++) {
-                    allBookings[i].style.display = 'none';
+                    allBookings[i].className = 'booking-section';
                 }
                 
-                var clickedSlots = document.querySelectorAll('[data-vehicle-id="' + vehicleId + '"][data-slot-index="' + slotIndex + '"]');
-                if (clickedSlots.length > 0) {
-                    clickedSlots[0].className += ' selected';
-                }
+                // Select current slot
+                event.target.closest('.slot-item').className += ' selected';
+                selectedSlot = slotTime;
+                selectedVehicleId = vehicleId;
+                selectedLeadId = null;
                 
-                selectedSlot = slotIndex;
-                selectedVehicle = vehicleId;
+                // Clear lead search
+                document.getElementById('leadSearch-' + vehicleId).value = '';
+                document.getElementById('leadResults-' + vehicleId).className = 'lead-results';
+                document.getElementById('leadResults-' + vehicleId).innerHTML = '';
+                document.getElementById('selectedLead-' + vehicleId).className = 'selected-lead-info';
+                document.getElementById('bookBtn-' + vehicleId).setAttribute('disabled', 'disabled');
                 
-                document.getElementById('booking-' + vehicleId).style.display = 'block';
+                // Show booking section
+                document.getElementById('booking-' + vehicleId).className = 'booking-section show';
                 
+                // Scroll to booking section
                 setTimeout(function() {
                     document.getElementById('booking-' + vehicleId).scrollIntoView({ 
                         behavior: 'smooth', 
@@ -682,29 +1120,205 @@
                 }, 100);
             }
             
-            function submitBooking(vehicleId) {
-                var name = document.getElementById('name-' + vehicleId).value;
-                var email = document.getElementById('email-' + vehicleId).value;
-                var phone = document.getElementById('phone-' + vehicleId).value;
+            // Search Leads
+            function searchLeads(vehicleId) {
+                clearTimeout(searchTimeout);
                 
-                if (!name || !email || !phone) {
-                    alert('Please fill in all required fields');
-                    return false;
+                var searchTerm = document.getElementById('leadSearch-' + vehicleId).value;
+                var resultsDiv = document.getElementById('leadResults-' + vehicleId);
+                
+                if (searchTerm.length < 2) {
+                    resultsDiv.className = 'lead-results';
+                    resultsDiv.innerHTML = '';
+                    return;
                 }
                 
-                document.getElementById('successMessage').className = 'success-message show';
+                searchTimeout = setTimeout(function() {
+                    resultsDiv.innerHTML = '<div style="text-align: center; padding: 20px; color: #999;">&#9203; Searching leads...</div>';
+                    resultsDiv.className = 'lead-results show';
+                    
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.TestDriveBookingController.searchLeads}',
+                        searchTerm,
+                        function(result, event) {
+                            if (event.status) {
+                                displayLeadResults(result, vehicleId);
+                            } else {
+                                resultsDiv.innerHTML = '<div style="text-align: center; padding: 20px; color: #f44336;">&#10060; Error: ' + 
+                                    escapeHtml(event.message) + '</div>';
+                            }
+                        },
+                        {escape: false, timeout: 15000}
+                    );
+                }, 500);
+            }
+            
+            // Display Lead Results
+            function displayLeadResults(leads, vehicleId) {
+                var resultsDiv = document.getElementById('leadResults-' + vehicleId);
+                resultsDiv.innerHTML = '';
                 
-                document.getElementById('successMessage').scrollIntoView({ 
-                    behavior: 'smooth' 
-                });
+                if (!leads || leads.length === 0) {
+                    resultsDiv.innerHTML = '<div style="text-align: center; padding: 30px; color: #999;">&#128533; No leads found matching your search</div>';
+                    return;
+                }
                 
-                setTimeout(function() {
-                    document.getElementById('searchForm').reset();
-                    document.getElementById('resultsSection').style.display = 'none';
-                    document.getElementById('successMessage').className = 'success-message';
-                    selectedSlot = null;
-                    selectedVehicle = null;
-                }, 5000);
+                for (var i = 0; i < leads.length; i++) {
+                    var lead = leads[i];
+                    var leadItem = document.createElement('div');
+                    leadItem.className = 'lead-item';
+                    leadItem.setAttribute('data-lead-id', lead.leadId);
+                    leadItem.setAttribute('data-vehicle-id', vehicleId);
+                    leadItem.onclick = function() { 
+                        selectLead(this.getAttribute('data-lead-id'), this.getAttribute('data-vehicle-id')); 
+                    };
+                    
+                    var details = [];
+                    if (lead.email) details.push('<div class="lead-detail-row">&#9993; ' + escapeHtml(lead.email) + '</div>');
+                    if (lead.phone) details.push('<div class="lead-detail-row">&#9742; ' + escapeHtml(lead.phone) + '</div>');
+                    if (lead.company) details.push('<div class="lead-detail-row">&#127970; ' + escapeHtml(lead.company) + '</div>');
+                    if (lead.title) details.push('<div class="lead-detail-row">&#128188; ' + escapeHtml(lead.title) + '</div>');
+                    if (lead.location) details.push('<div class="lead-detail-row">&#128205; ' + escapeHtml(lead.location) + '</div>');
+                    
+                    leadItem.innerHTML = 
+                        '<div class="lead-name">' +
+                            '<span>' + escapeHtml(lead.name) + '</span>' +
+                            '<span class="lead-status-badge">' + escapeHtml(lead.status) + '</span>' +
+                        '</div>' +
+                        '<div class="lead-details">' + details.join('') + '</div>';
+                    
+                    resultsDiv.appendChild(leadItem);
+                }
+                
+                resultsDiv.className = 'lead-results show';
+            }
+            
+            // Select Lead
+            function selectLead(leadId, vehicleId) {
+                selectedLeadId = leadId;
+                
+                // Update UI
+                var allLeadItems = document.getElementById('leadResults-' + vehicleId).querySelectorAll('.lead-item');
+                for (var i = 0; i < allLeadItems.length; i++) {
+                    allLeadItems[i].className = 'lead-item';
+                }
+                
+                var selectedItem = document.querySelector('[data-lead-id="' + leadId + '"]');
+                if (selectedItem) {
+                    selectedItem.className = 'lead-item selected';
+                    
+                    var leadNameElement = selectedItem.querySelector('.lead-name span');
+                    var leadName = leadNameElement ? leadNameElement.textContent : '';
+                    var leadDetails = selectedItem.querySelector('.lead-details').innerHTML;
+                    
+                    document.getElementById('selectedLead-' + vehicleId).innerHTML = 
+                        '<div class="selected-lead-header">&#10004; Selected Lead</div>' +
+                        '<div class="selected-lead-name">' + leadName + '</div>' +
+                        '<div class="selected-lead-details">' + leadDetails + '</div>';
+                    
+                    document.getElementById('selectedLead-' + vehicleId).className = 'selected-lead-info show';
+                    document.getElementById('bookBtn-' + vehicleId).removeAttribute('disabled');
+                }
+            }
+            
+            // Create Appointment
+            function createAppointment(vehicleId) {
+                if (!selectedLeadId || !selectedSlot || !selectedVehicleId) {
+                    showAlert('<span class="alert-icon">&#9888;</span> Please select a lead and time slot', 'warning');
+                    return;
+                }
+                
+                if (!currentSearchDate) {
+                    showAlert('<span class="alert-icon">&#9888;</span> Invalid date selected', 'warning');
+                    return;
+                }
+                
+                var bookBtn = document.getElementById('bookBtn-' + vehicleId);
+                bookBtn.setAttribute('disabled', 'disabled');
+                bookBtn.innerHTML = '&#9203; Creating Appointment...';
+                
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.TestDriveBookingController.createAppointment}',
+                    selectedLeadId, selectedVehicleId, currentSearchDate, selectedSlot,
+                    function(result, event) {
+                        if (event.status) {
+                            if (result.success) {
+                                var successMessage = 
+                                    '<span class="alert-icon">&#10004;</span> ' +
+                                    '<strong>Appointment Successfully Created!</strong><br/><br/>' +
+                                    '<strong>&#128100; Lead:</strong> ' + escapeHtml(result.leadName) + '<br/>' +
+                                    '<strong>&#128663; Vehicle:</strong> ' + escapeHtml(result.vehicleName) + '<br/>' +
+                                    '<strong>&#128205; Branch:</strong> ' + escapeHtml(result.branch) + '<br/>' +
+                                    '<strong>&#128197; Date:</strong> ' + escapeHtml(result.appointmentDate) + '<br/>' +
+                                    '<strong>&#128337; Time:</strong> ' + escapeHtml(result.timeSlot);
+                                
+                                showAlert(successMessage, 'success');
+                                
+                                // Reset and refresh
+                                setTimeout(function() {
+                                    searchVehicles();
+                                    document.getElementById('alertBox').scrollIntoView({ behavior: 'smooth' });
+                                }, 2000);
+                            } else {
+                                showAlert('<span class="alert-icon">&#10060;</span> <strong>Error:</strong> ' + escapeHtml(result.message), 'error');
+                                bookBtn.removeAttribute('disabled');
+                                bookBtn.innerHTML = '&#10004; Confirm Appointment';
+                            }
+                        } else {
+                            showAlert('<span class="alert-icon">&#10060;</span> <strong>Error creating appointment:</strong> ' + escapeHtml(event.message), 'error');
+                            bookBtn.removeAttribute('disabled');
+                            bookBtn.innerHTML = '&#10004; Confirm Appointment';
+                        }
+                    },
+                    {escape: false, timeout: 30000}
+                );
+            }
+            
+            // Show No Results
+            function showNoResults() {
+                var resultsSection = document.getElementById('resultsSection');
+                resultsSection.innerHTML = 
+                    '<div class="no-results">' +
+                        '<div class="no-results-icon">&#128663;</div>' +
+                        '<h3>No Vehicles Available</h3>' +
+                        '<p>No vehicles match your search criteria for the selected date.<br/>Please try different options or another date.</p>' +
+                    '</div>';
+                resultsSection.className = 'results-section show';
+            }
+            
+            // Show Alert
+            function showAlert(message, type) {
+                var alertBox = document.getElementById('alertBox');
+                alertBox.className = 'alert alert-' + type + ' show';
+                alertBox.innerHTML = message;
+                
+                alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                if (type === 'success') {
+                    setTimeout(function() {
+                        hideAlert();
+                    }, 8000);
+                }
+            }
+            
+            // Hide Alert
+            function hideAlert() {
+                var alertBox = document.getElementById('alertBox');
+                alertBox.className = 'alert';
+                alertBox.innerHTML = '';
+            }
+            
+            // Escape HTML to prevent XSS
+            function escapeHtml(text) {
+                if (!text) return '';
+                var map = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                };
+                return text.toString().replace(/[&<>"']/g, function(m) { return map[m]; });
             }
         </script>
     </body>
