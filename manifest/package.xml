@@ -28,7 +28,10 @@
         <members>*</members>
         <name>AuraDefinitionBundle</name>
     </types>
-
+<types>
+    <members>*</members>
+    <name>CustomSetting</name>
+</types>
     <!-- Objects & Schema -->
     <types>
         <members>*</members>
