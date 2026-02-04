@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 
-    <!-- Custom Objects & Fields -->
+    <!-- Custom Objects (includes Custom Settings) -->
     <types>
         <members>*</members>
         <name>CustomObject</name>
@@ -17,6 +17,12 @@
         <name>ApexTrigger</name>
     </types>
 
+    <!-- Lightning -->
+    <types>
+        <members>*</members>
+        <name>LightningComponentBundle</name>
+    </types>
+
     <!-- Visualforce -->
     <types>
         <members>*</members>
@@ -27,13 +33,7 @@
         <name>ApexComponent</name>
     </types>
 
-    <!-- Lightning -->
-    <types>
-        <members>*</members>
-        <name>LightningComponentBundle</name>
-    </types>
-
-    <!-- Flows & Automation -->
+    <!-- Automation -->
     <types>
         <members>*</members>
         <name>Flow</name>
@@ -47,20 +47,6 @@
         <name>ApprovalProcess</name>
     </types>
 
-    <!-- Security -->
-    <types>
-        <members>*</members>
-        <name>Profile</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>Role</name>
-    </types>
-
     <!-- UI -->
     <types>
         <members>*</members>
@@ -69,6 +55,16 @@
     <types>
         <members>*</members>
         <name>FlexiPage</name>
+    </types>
+
+    <!-- Security -->
+    <types>
+        <members>*</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>Role</name>
     </types>
 
     <!-- Reports & Dashboards -->
@@ -81,23 +77,13 @@
         <name>Dashboard</name>
     </types>
 
-    <!-- Email -->
-    <types>
-        <members>*</members>
-        <name>EmailTemplate</name>
-    </types>
-
-    <!-- Custom Metadata & Settings -->
+    <!-- Custom Metadata -->
     <types>
         <members>*</members>
         <name>CustomMetadata</name>
     </types>
-    <types>
-        <members>*</members>
-        <name>CustomSettings</name>
-    </types>
 
-    <!-- Other Common Metadata -->
+    <!-- Other -->
     <types>
         <members>*</members>
         <name>StaticResource</name>
@@ -111,7 +97,5 @@
         <name>RemoteSiteSetting</name>
     </types>
 
-    <!-- API Version -->
     <version>59.0</version>
-
 </Package>
