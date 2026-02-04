@@ -1,0 +1,912 @@
+<apex:page controller="LandRoverLeadController" 
+           showHeader="false" 
+           sidebar="false" 
+           standardStylesheets="false"
+           docType="html-5.0"
+           applyHtmlTag="false"
+           applyBodyTag="false">
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Land Rover | Experience Grandeur</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet"/>
+    
+    <style>
+        :root {
+            --gold-primary: #d4af37;
+            --gold-secondary: #b8962e;
+            --gold-light: rgba(212, 175, 55, 0.1);
+            --dark-bg: #0a0a0a;
+            --dark-card: rgba(15, 15, 15, 0.9);
+            --dark-input: rgba(26, 26, 26, 0.8);
+            --text-light: #ffffff;
+            --text-gray: #aaaaaa;
+            --text-dark: #666666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Luxury Container */
+        .luxury-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0c0c0c 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .luxury-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.03) 0%, transparent 50%);
+        }
+
+        .luxury-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d4af37' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+
+        /* Main Content */
+        .luxury-content {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        /* Luxury Card */
+        .luxury-card {
+            width: 100%;
+            max-width: 900px;
+            background: var(--dark-card);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 60px 50px;
+            box-shadow:
+                0 40px 80px rgba(0, 0, 0, 0.8),
+                0 0 0 1px rgba(212, 175, 55, 0.1),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            animation: cardAppear 1s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        @keyframes cardAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Header */
+        .luxury-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .brand-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .luxury-logo {
+            height: 70px;
+            width: auto;
+            filter: brightness(1.2);
+        }
+
+        .brand-text {
+            text-align: left;
+        }
+
+        .brand-subtitle {
+            font-size: 14px;
+            letter-spacing: 4px;
+            color: var(--gold-primary);
+            font-weight: 300;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 8px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .luxury-title {
+            font-size: 42px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            margin: 0;
+            text-transform: uppercase;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, var(--gold-primary), #f0d779);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .luxury-subtitle {
+            font-size: 18px;
+            color: var(--text-gray);
+            font-weight: 300;
+            letter-spacing: 0.8px;
+            margin-top: 15px;
+        }
+
+        .luxury-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 35px;
+        }
+
+        .divider-line {
+            width: 120px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+        }
+
+        .divider-diamond {
+            width: 10px;
+            height: 10px;
+            background: var(--gold-primary);
+            transform: rotate(45deg);
+            margin: 0 25px;
+        }
+
+        /* Form Styles */
+        .luxury-form {
+            margin: 40px 0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .luxury-label {
+            display: block;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            color: var(--gold-primary);
+            margin-bottom: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .luxury-label .required {
+            color: #ff4d4d;
+            margin-left: 4px;
+        }
+
+        /* Input Styles */
+        .luxury-input {
+            width: 100%;
+            background: var(--dark-input) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 12px !important;
+            color: var(--text-light) !important;
+            padding: 18px 22px !important;
+            font-size: 16px !important;
+            font-weight: 300 !important;
+            letter-spacing: 0.3px !important;
+            transition: all 0.3s ease !important;
+            outline: none !important;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .luxury-input:focus {
+            border-color: var(--gold-primary) !important;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2) !important;
+            background: rgba(26, 26, 26, 1) !important;
+        }
+
+        .luxury-input::placeholder {
+            color: var(--text-dark) !important;
+            font-weight: 300;
+        }
+
+        /* Select Styles */
+        .select-wrapper {
+            position: relative;
+        }
+
+        .luxury-select {
+            width: 100%;
+            background: var(--dark-input) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 12px !important;
+            color: var(--text-light) !important;
+            padding: 18px 22px !important;
+            font-size: 16px !important;
+            font-weight: 300 !important;
+            letter-spacing: 0.3px !important;
+            transition: all 0.3s ease !important;
+            outline: none !important;
+            appearance: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .luxury-select:focus {
+            border-color: var(--gold-primary) !important;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2) !important;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold-primary);
+            font-size: 20px;
+            pointer-events: none;
+            transition: transform 0.3s ease;
+        }
+
+        .select-wrapper:focus-within .select-arrow {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        /* Checkbox */
+        .consent-section {
+            margin: 40px 0;
+            padding: 25px;
+            background: rgba(26, 26, 26, 0.4);
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .luxury-checkbox {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--dark-input);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+            margin-top: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .luxury-checkbox:checked {
+            background: var(--gold-primary);
+            border-color: var(--gold-primary);
+        }
+
+        .luxury-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .checkbox-label {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        /* Button */
+        .luxury-btn {
+            width: 100%;
+            padding: 22px !important;
+            background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-secondary) 100%) !important;
+            border: none !important;
+            border-radius: 12px !important;
+            color: #000000 !important;
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            letter-spacing: 2px !important;
+            text-transform: uppercase !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .luxury-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3) !important;
+        }
+
+        .luxury-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .luxury-btn.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .button-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            border-top: 2px solid #000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .luxury-btn.loading .spinner {
+            display: block;
+        }
+
+        .luxury-btn.loading .button-text {
+            opacity: 0.8;
+        }
+
+        /* Assurance Text */
+        .assurance-text {
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 15px;
+            background: rgba(26, 26, 26, 0.4);
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .assurance-icon {
+            color: var(--gold-primary);
+            font-weight: bold;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        /* Footer */
+        .luxury-footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .footer-text {
+            color: var(--text-dark);
+            font-size: 12px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-logos {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .luxury-badge {
+            padding: 10px 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 25px;
+            color: var(--gold-primary);
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* Messages */
+        .message {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.success {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            color: #28a745;
+        }
+
+        .message.error {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            color: #dc3545;
+        }
+
+        /* Page Messages Custom Styling */
+        .messagePanel {
+            margin-bottom: 30px;
+        }
+
+        .messagePanel table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .messagePanel .message {
+            margin-bottom: 10px;
+            padding: 16px 20px;
+            border-radius: 10px;
+        }
+
+        .messagePanel .message.success {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+
+        .messagePanel .message.error {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.2);
+        }
+
+        .messagePanel .message.warning {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+        }
+
+        .messagePanel .message.info {
+            background: rgba(23, 162, 184, 0.1);
+            border: 1px solid rgba(23, 162, 184, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .luxury-card {
+                padding: 40px 30px;
+                max-width: 95%;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .brand-wrapper {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .brand-text {
+                text-align: center;
+            }
+            
+            .luxury-title {
+                font-size: 32px;
+            }
+            
+            .luxury-subtitle {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .luxury-content {
+                padding: 20px 15px;
+            }
+            
+            .luxury-card {
+                padding: 30px 20px;
+            }
+            
+            .luxury-title {
+                font-size: 26px;
+                letter-spacing: 1px;
+            }
+            
+            .luxury-btn {
+                padding: 20px !important;
+                font-size: 14px !important;
+            }
+            
+            .footer-logos {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+
+        /* Focus styles */
+        *:focus {
+            outline: none;
+        }
+
+        .luxury-input:focus,
+        .luxury-select:focus {
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="luxury-container">
+        <!-- Background -->
+        <div class="luxury-background">
+            <div class="luxury-pattern"></div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="luxury-content">
+            <div class="luxury-card">
+                
+                <!-- Header -->
+                <div class="luxury-header">
+                    <div class="brand-wrapper">
+                        <!--<apex:image value="{!$Resource.LandRoverLogo}" styleClass="luxury-logo" alt="Land Rover"/>-->
+                        <div class="brand-text">
+                            <span class="brand-subtitle">LAND ROVER</span>
+                            <h1 class="luxury-title">Experience Grandeur</h1>
+                        </div>
+                    </div>
+                    <p class="luxury-subtitle">Book Your Exclusive Test Drive</p>
+                    <div class="luxury-divider">
+                        <div class="divider-line"></div>
+                        <div class="divider-diamond"></div>
+                        <div class="divider-line"></div>
+                    </div>
+                </div>
+
+                <!-- Messages -->
+                <apex:outputPanel layout="block" styleClass="messagePanel" id="messagesPanel">
+                    <apex:pageMessages id="messages" />
+                </apex:outputPanel>
+                
+                <apex:outputPanel layout="block" styleClass="message success" id="successMessage" style="display: none;">
+                    Thank you! Our Relationship Manager will contact you within 24 hours.
+                </apex:outputPanel>
+
+                <!-- Form -->
+                <apex:form id="leadForm" styleClass="luxury-form">
+                    <div class="form-grid">
+                        <!-- First Name -->
+                        <div class="form-group">
+                            <label class="luxury-label">First Name</label>
+                            <apex:inputText value="{!lead.FirstName}" 
+                                          styleClass="luxury-input" 
+                                          html-placeholder="Enter your first name"/>
+                        </div>
+                        
+                        <!-- Last Name -->
+                        <div class="form-group">
+                            <label class="luxury-label">
+                                Last Name <span class="required">*</span>
+                            </label>
+                            <apex:inputText value="{!lead.LastName}" 
+                                          styleClass="luxury-input" 
+                                          html-placeholder="Enter your last name"
+                                          required="true"/>
+                        </div>
+                        
+                        <!-- Phone -->
+                        <div class="form-group">
+                            <label class="luxury-label">
+                                Phone <span class="required">*</span>
+                            </label>
+                            <apex:inputText value="{!lead.Phone}" 
+                                          styleClass="luxury-input" 
+                                          html-placeholder="+91 XXXX XXX XXX"
+                                          required="true"/>
+                        </div>
+                        
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label class="luxury-label">Email</label>
+                            <apex:inputText value="{!lead.Email}"
+                styleClass="luxury-input"
+                html-placeholder="name@example.com"/>
+
+                        </div>
+                        
+                        <!-- Car Model -->
+                        <div class="form-group full-width">
+                            <label class="luxury-label">Car Model Interested</label>
+                            <div class="select-wrapper">
+                                <apex:selectList value="{!lead.Interested_Vehicle__c}" 
+                                               size="1" 
+                                               styleClass="luxury-select">
+                                    <apex:selectOption itemValue="" itemLabel="Select Model"/>
+                                    <apex:selectOption itemValue="Range Rover" itemLabel="Range Rover"/>
+                                    <apex:selectOption itemValue="Defender" itemLabel="Defender"/>
+                                    <apex:selectOption itemValue="Discovery" itemLabel="Discovery"/>
+                                    <apex:selectOption itemValue="Velar" itemLabel="Velar"/>
+                                    <apex:selectOption itemValue="Evoque" itemLabel="Evoque"/>
+                                </apex:selectList>
+                                <div class="select-arrow">▼</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Budget Range -->
+                        <div class="form-group">
+                            <label class="luxury-label">Budget Range</label>
+                            <div class="select-wrapper">
+                                <apex:selectList value="{!lead.Budget_Range__c}" 
+                                               size="1" 
+                                               styleClass="luxury-select">
+                                    <apex:selectOption itemValue="" itemLabel="Select Range"/>
+                                    <apex:selectOption itemValue="60L - 80L" itemLabel="₹60L - ₹80L"/>
+                                    <apex:selectOption itemValue="80L - 1Cr" itemLabel="₹80L - ₹1Cr"/>
+                                    <apex:selectOption itemValue="1Cr+" itemLabel="₹1Cr+"/>
+                                </apex:selectList>
+                                <div class="select-arrow">▼</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Purchase Timeline -->
+                        <div class="form-group">
+                            <label class="luxury-label">Purchase Timeline</label>
+                            <div class="select-wrapper">
+                                <apex:selectList value="{!lead.Purchase_Timeline__c}" 
+                                               size="1" 
+                                               styleClass="luxury-select">
+                                    <apex:selectOption itemValue="" itemLabel="Select Timeline"/>
+                                    <apex:selectOption itemValue="Immediate" itemLabel="Immediate"/>
+                                    <apex:selectOption itemValue="1-3 Months" itemLabel="1-3 Months"/>
+                                    <apex:selectOption itemValue="3-6 Months" itemLabel="3-6 Months"/>
+                                    <apex:selectOption itemValue="6+ Months" itemLabel="6+ Months"/>
+                                </apex:selectList>
+                                <div class="select-arrow">▼</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Consent -->
+                    <div class="consent-section">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="consent" class="luxury-checkbox" checked="checked"/>
+                            <label for="consent" class="checkbox-label">
+                                I agree to receive communications regarding my enquiry and other promotional updates from Land Rover
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Submit -->
+                    <div class="submit-section">
+                        <apex:commandButton value="REQUEST VIP CONSULTATION" 
+                                          action="{!saveLead}" 
+                                          styleClass="luxury-btn" 
+                                          rerender="leadForm,messagesPanel,successMessage"
+                                          oncomplete="handleSubmitComplete()"
+                                          onclick="showLoading()">
+                            <span class="button-content">
+                                <span class="button-text">REQUEST VIP CONSULTATION</span>
+                                <div class="spinner"></div>
+                            </span>
+                        </apex:commandButton>
+                        
+                        <div class="assurance-text">
+                            <span class="assurance-icon">✓</span>
+                            <span>Your personal Relationship Manager will contact you within 24 hours</span>
+                        </div>
+                    </div>
+                </apex:form>
+                
+                <!-- Footer -->
+                <div class="luxury-footer">
+                    <p class="footer-text">By submitting this form, you authorize Land Rover to contact you via phone or email. Your information is protected under our Privacy Policy.</p>
+                    <div class="footer-logos">
+                        <span class="luxury-badge">EXCLUSIVE</span>
+                        <span class="luxury-badge">CONFIDENTIAL</span>
+                        <span class="luxury-badge">VIP ACCESS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Handle loading state
+        function showLoading() {
+            var button = document.querySelector('.luxury-btn');
+            button.classList.add('loading');
+            button.disabled = true;
+        }
+        
+        function hideLoading() {
+            var button = document.querySelector('.luxury-btn');
+            button.classList.remove('loading');
+            button.disabled = false;
+        }
+        
+        // Handle form submission complete
+        function handleSubmitComplete() {
+            hideLoading();
+            
+            // Check for success
+            var successPanel = document.getElementById('{!$Component.successMessage}');
+            if (successPanel && successPanel.style.display !== 'none') {
+                // Show success message
+                successPanel.style.display = 'block';
+                
+                // Reset form after delay
+                setTimeout(function() {
+                    // You can redirect or show a thank you message
+                    document.querySelector('.luxury-form').reset();
+                    successPanel.style.display = 'none';
+                }, 5000);
+            }
+            
+            // Style the page messages
+            stylePageMessages();
+            
+            // Scroll to top if there are messages
+            var messages = document.querySelector('.messagePanel');
+            if (messages && messages.children.length > 0) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        
+        // Style page messages
+        function stylePageMessages() {
+            var messages = document.querySelectorAll('.messagePanel .message');
+            messages.forEach(function(msg) {
+                // Add appropriate class based on message type
+                if (msg.textContent.includes('Thank you') || msg.textContent.includes('success')) {
+                    msg.classList.add('success');
+                } else if (msg.textContent.includes('error') || msg.textContent.includes('Error')) {
+                    msg.classList.add('error');
+                } else if (msg.textContent.includes('warning') || msg.textContent.includes('Warning')) {
+                    msg.classList.add('warning');
+                } else {
+                    msg.classList.add('info');
+                }
+            });
+        }
+        
+        // Add focus styles for inputs
+        document.addEventListener('DOMContentLoaded', function() {
+            var inputs = document.querySelectorAll('.luxury-input, .luxury-select');
+            
+            inputs.forEach(function(input) {
+                // Add focus effect
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-2px)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+                
+                // Add floating label effect for empty inputs
+                input.addEventListener('input', function() {
+                    if (this.value.trim() !== '') {
+                        this.style.borderColor = 'rgba(212, 175, 55, 0.5)';
+                    } else {
+                        this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                    }
+                });
+            });
+            
+            // Handle checkbox styling
+            var checkboxes = document.querySelectorAll('.luxury-checkbox');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        this.style.borderColor = 'var(--gold-primary)';
+                        this.style.backgroundColor = 'var(--gold-primary)';
+                    } else {
+                        this.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                        this.style.backgroundColor = 'var(--dark-input)';
+                    }
+                });
+            });
+            
+            // Auto-hide messages after 5 seconds
+            setTimeout(function() {
+                var messages = document.querySelectorAll('.message');
+                messages.forEach(function(message) {
+                    if (message.style.display === 'block') {
+                        message.style.display = 'none';
+                    }
+                });
+            }, 5000);
+            
+            // Add subtle animation to form elements
+            var formGroups = document.querySelectorAll('.form-group');
+            formGroups.forEach(function(group, index) {
+                group.style.animationDelay = (index * 0.1) + 's';
+                group.style.animation = 'fadeIn 0.5s ease forwards';
+                group.style.opacity = '0';
+            });
+            
+            // Style initial page messages
+            stylePageMessages();
+        });
+        
+        // Prevent form submission if consent is not checked
+        document.addEventListener('submit', function(e) {
+            var consentCheckbox = document.getElementById('consent');
+            if (consentCheckbox && !consentCheckbox.checked) {
+                e.preventDefault();
+                alert('Please agree to receive communications to proceed.');
+                consentCheckbox.focus();
+                return false;
+            }
+            return true;
+        });
+    </script>
+</body>
+</html>
+</apex:page>

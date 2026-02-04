@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Variant__c</fullName>
+    <externalId>false</externalId>
+    <label>Variant</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>RANGE ROVER SPORT</fullName>
+                <default>false</default>
+                <label>RANGE ROVER SPORT</label>
+            </value>
+            <value>
+                <fullName>RANGE ROVER VELAR</fullName>
+                <default>false</default>
+                <label>RANGE ROVER VELAR</label>
+            </value>
+            <value>
+                <fullName>DEFENDER OCTA</fullName>
+                <default>false</default>
+                <label>DEFENDER OCTA</label>
+            </value>
+            <value>
+                <fullName>DISCOVERY SPORT</fullName>
+                <default>false</default>
+                <label>DISCOVERY SPORT</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
